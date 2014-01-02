@@ -16,4 +16,4 @@ By default, a user is considered active if they have said something in the last 
 - Optionally change the recent activity time (in seconds): `/set smartfilter_delay 900`
 
 ## Credits
-Originally by [Christian Brassat](http://crshd.anapnea.net/2012/10/03/Smartfilter-for-Irssi/)
+Based upon work by [Christian Brassat](http://crshd.anapnea.net/2012/10/03/Smartfilter-for-Irssi/)
