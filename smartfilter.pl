@@ -20,6 +20,8 @@ sub smartfilter_chan {
 	my ($server, $channel, $nick, $address) = @_;
 	if ($lastmsg->{$nick} <= time() - Irssi::settings_get_int('smartfilter_delay')) {
 		Irssi::signal_stop();
+	} else {
+		$lastmsg->{$nick} = time();
 	}
 };
 
@@ -27,6 +29,8 @@ sub smartfilter_quit {
 	my ($channel, $nick, $address, $reason) = @_;
 	if ($lastmsg->{$nick} <= time() - Irssi::settings_get_int('smartfilter_delay')) {
 		Irssi::signal_stop();
+	} else {
+		$lastmsg->{$nick} = time();
 	}
 };
 
@@ -34,6 +38,9 @@ sub smartfilter_nick {
 	my ($server, $newnick, $nick, $address) = @_;
 	if ($lastmsg->{$nick} <= time() - Irssi::settings_get_int('smartfilter_delay')) {
 		Irssi::signal_stop();
+	} else {
+		$lastmsg->{$nick} = time();
+		$lastmsg->{$newnick} = time();
 	}
 };
 
