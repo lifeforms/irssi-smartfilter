@@ -54,4 +54,4 @@ Irssi::signal_add('message part', 'smartfilter_chan');
 Irssi::signal_add('message quit', 'smartfilter_quit');
 Irssi::signal_add('message nick', 'smartfilter_nick');
 
-Irssi::settings_add_int('smartfilter', 'smartfilter_delay', 300);
+Irssi::settings_add_int('smartfilter', 'smartfilter_delay', 900);

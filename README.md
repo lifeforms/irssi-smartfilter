@@ -7,13 +7,13 @@ When the script is running, a user's events will only be displayed when they hav
 
 This script limits noise from large channels, while preventing you from talking to a conversation partner who has left (which can happen if you just ignore all events).
 
-By default, a user is considered active if they have said something in the last 300 seconds. If they do change nick, part the channel, quit, etc., they are also kept active, so you will not miss re-joins or subsequent nick changes.
+By default, a user is considered active if they have said something in the last 15 minutes. If they do change nick, part the channel, quit, etc., they are also kept active, so you will not miss re-joins or subsequent nick changes.
 
 ## Usage
 - Download `smartfilter.pl` to your `.irssi/scripts` directory
 - To run once: `/run smartfilter`
 - To run automatically, create a symlink to `smartfilter.pl` in your `.irssi/scripts/autorun` directory
-- Optionally change the recent activity time: `/set smartfilter_delay 300`
+- Optionally change the recent activity time (in seconds): `/set smartfilter_delay 900`
 
 ## Credits
 Originally by [Christian Brassat](http://crshd.anapnea.net/2012/10/03/Smartfilter-for-Irssi/)
