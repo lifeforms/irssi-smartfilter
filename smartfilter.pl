@@ -16,7 +16,14 @@ $VERSION = "0.1";
 
 our $lastmsg = {};
 
-sub smartfilter {
+sub smartfilter_chan {
+	my ($server, $channel, $nick, $address) = @_;
+	if ($lastmsg->{$nick} <= time() - Irssi::settings_get_int('smartfilter_delay')) {
+		Irssi::signal_stop();
+	}
+};
+
+sub smartfilter_quit {
 	my ($channel, $nick, $address, $reason) = @_;
 	if ($lastmsg->{$nick} <= time() - Irssi::settings_get_int('smartfilter_delay')) {
 		Irssi::signal_stop();
@@ -29,8 +36,8 @@ sub log {
 }
 
 Irssi::signal_add('message public', 'log');
-Irssi::signal_add('message join', 'smartfilter');
-Irssi::signal_add('message part', 'smartfilter');
-Irssi::signal_add('message quit', 'smartfilter');
+Irssi::signal_add('message join', 'smartfilter_chan');
+Irssi::signal_add('message part', 'smartfilter_chan');
+Irssi::signal_add('message quit', 'smartfilter_quit');
 
 Irssi::settings_add_int('smartfilter', 'smartfilter_delay', 300);
