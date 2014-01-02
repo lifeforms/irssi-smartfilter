@@ -7,7 +7,7 @@ When the script is running, a user's events will only be displayed when they hav
 
 This script limits noise from large channels, while preventing you from talking to a conversation partner who has left (which can happen if you just ignore all events).
 
-By default, a user is considered active if they have said something in the last 15 minutes. If they do change nick, part the channel, quit, etc., they are also kept active, so you will not miss re-joins or subsequent nick changes.
+By default, a user is considered active if they have said something in the last 15 minutes. If they leave the channel, change nick etc., they are kept active, so you will not miss re-joins or subsequent nick changes.
 
 ## Usage
 - Download `smartfilter.pl` to your `.irssi/scripts` directory
