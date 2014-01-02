@@ -2,16 +2,16 @@ use strict;
 use Irssi;
 use vars qw($VERSION %IRSSI);
 
-$VERSION = "0.1";
+$VERSION = "0.2";
 
 %IRSSI = (
-	authors     => 'Christian Brassat',
-	contact     => 'crshd@mail.com',
+	authors     => 'Christian Brassat and Walter Hop',
+	contact     => 'irssi-smartfilter@spam.lifeforms.nl',
 	name        => 'smartfilter.pl',
-	description => 'This script hides join/part messages.',
+	description => 'Smart filter for join, part, quit, nick messages',
 	license     => 'BSD',
-	url         => 'http://crshd.anapnea.net',
-	changed     => '2012-10-02',
+	url         => 'https://github.com/lifeforms/irssi-smartfilter',
+	changed     => '2014-01-02',
 );
 
 our $lastmsg = {};
