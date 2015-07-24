@@ -82,5 +82,5 @@ Irssi::signal_add('message part', 'smartfilter_chan');
 Irssi::signal_add('message quit', 'smartfilter_quit');
 Irssi::signal_add('message nick', 'smartfilter_nick');
 
-Irssi::settings_add_int('smartfilter', 'smartfilter_garbage_multiplier', 5);
-Irssi::settings_add_int('smartfilter', 'smartfilter_delay', 900);
+Irssi::settings_add_int('smartfilter', 'smartfilter_garbage_multiplier', 4);
+Irssi::settings_add_int('smartfilter', 'smartfilter_delay', 1200);
