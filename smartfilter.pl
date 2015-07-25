@@ -35,14 +35,14 @@ sub checkactive {
 		}
 	}
 
-	#Run the garbage collection every interval
+	# Run the garbage collection every interval.
 	if ($garbagetime <= time() - (Irssi::settings_get_int('smartfilter_delay') * Irssi::settings_get_int('smartfilter_garbage_multiplier') )) {
 		garbagecollect();
 		$garbagetime = time();
 	}
 }
 
-#Implements garbage collection
+# Implements garbage collection.
 sub garbagecollect{
 	my ($key) = @_;
 	foreach ($lastmsg->{$key}) {
