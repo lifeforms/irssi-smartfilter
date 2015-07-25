@@ -2,7 +2,7 @@ use strict;
 use Irssi;
 use vars qw($VERSION %IRSSI);
 
-$VERSION = "0.3";
+$VERSION = "0.4";
 
 %IRSSI = (
 	authors     => 'Christian Brassat, Niall Bunting and Walter Hop',
@@ -11,7 +11,7 @@ $VERSION = "0.3";
 	description => 'Improved smart filter for join, part, quit, nick messages',
 	license     => 'BSD',
 	url         => 'https://github.com/lifeforms/irssi-smartfilter',
-	changed     => '2014-01-02',
+	changed     => '2015-07-25',
 );
 
 # Associative array of nick => last active unixtime
