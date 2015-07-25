@@ -16,6 +16,5 @@ By default, a user is considered active if they have said something in the last 
 - Optionally change the recent activity time (in seconds): `/set smartfilter_delay 1200`
 - Old nicks are removed from memory periodically. You can change how often the garbage collection runs by doing (how many smartfilter-delays it waits): `/set smartfilter_garbage_multiplier 4`
 
-## Credits
-Based upon work by [Walter Hop](https://lifeforms.nl/)
-Based upon work by [Christian Brassat](http://crshd.anapnea.net/2012/10/03/Smartfilter-for-Irssi/)
+## Contributors
+[Christian Brassat](http://crshd.anapnea.net/2012/10/03/Smartfilter-for-Irssi/), [Niall Bunting](http://niallbunting.com/) and [Walter Hop](https://lifeforms.nl/)
