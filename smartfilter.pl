@@ -5,18 +5,18 @@ use vars qw($VERSION %IRSSI);
 $VERSION = "0.3";
 
 %IRSSI = (
-	authors     => 'Christian Brassat and Walter Hop',
+	authors     => 'Niall Bunting, Christian Brassat and Walter Hop',
 	contact     => 'irssi-smartfilter@spam.lifeforms.nl',
 	name        => 'smartfilter.pl',
-	description => 'Smart filter for join, part, quit, nick messages',
+	description => 'Improved smart filter for join, part, quit, nick messages',
 	license     => 'BSD',
 	url         => 'https://github.com/lifeforms/irssi-smartfilter',
 	changed     => '2014-01-02',
 );
 
 # Associative array of nick => last active unixtime
-# TODO: garbage collect, any entries older than smartfilter_delay can be safely removed
 our $lastmsg = {};
+our $garbagetime = 1;
 
 # Do checks after receving a channel event.
 # - If the originating nick is not active, ignore the signal.
@@ -26,11 +26,28 @@ our $lastmsg = {};
 sub checkactive {
 	my ($nick, $altnick) = @_;
 	if ($lastmsg->{$nick} <= time() - Irssi::settings_get_int('smartfilter_delay')) {
+		delete $lastmsg->{$nick};
 		Irssi::signal_stop();
 	} else {
 		$lastmsg->{$nick} = time();
 		if ($altnick) {
 			$lastmsg->{$altnick} = time();
+		}
+	}
+
+	#Run the garbage collection every interval
+	if ($garbagetime <= time() - (Irssi::settings_get_int('smartfilter_delay') * Irssi::settings_get_int('smartfilter_garbage_multiplier') )) {
+		garbagecollect();
+		$garbagetime = time();
+	}
+}
+
+#Implements garbage collection
+sub garbagecollect{
+	my ($key) = @_;
+	foreach ($lastmsg->{$key}) {
+		if ($lastmsg->{$key} <= time() - Irssi::settings_get_int('smartfilter_delay')) {
+                        delete $lastmsg->{$key}
 		}
 	}
 }
@@ -65,4 +82,5 @@ Irssi::signal_add('message part', 'smartfilter_chan');
 Irssi::signal_add('message quit', 'smartfilter_quit');
 Irssi::signal_add('message nick', 'smartfilter_nick');
 
-Irssi::settings_add_int('smartfilter', 'smartfilter_delay', 900);
+Irssi::settings_add_int('smartfilter', 'smartfilter_garbage_multiplier', 4);
+Irssi::settings_add_int('smartfilter', 'smartfilter_delay', 1200);

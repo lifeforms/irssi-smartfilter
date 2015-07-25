@@ -14,6 +14,8 @@ By default, a user is considered active if they have said something in the last 
 - To run once: `/run smartfilter`
 - To run automatically, create a symlink to `smartfilter.pl` in your `.irssi/scripts/autorun` directory
 - Optionally change the recent activity time (in seconds): `/set smartfilter_delay 900`
+- You can also change how often the garbage collection runs by doing (how many smartfilter-delays it waits): `/set smartfilter_garbage_multiplier 5`
 
 ## Credits
+Based upon work by [Walter Hop](https://lifeforms.nl/)
 Based upon work by [Christian Brassat](http://crshd.anapnea.net/2012/10/03/Smartfilter-for-Irssi/)
