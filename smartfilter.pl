@@ -75,7 +75,10 @@ sub smartfilter_quit {
 # NICK change received.
 sub smartfilter_nick {
 	my ($server, $newnick, $nick, $address) = @_;
-	&checkactive($nick, $newnick, undef);
+
+	if (Irssi::settings_get_bool('smartfilter_filter_nick')) {
+		&checkactive($nick, $newnick, undef);
+	}
 };
 
 # Channel message received. Mark the nick as active.
@@ -93,3 +96,4 @@ Irssi::signal_add('message nick', 'smartfilter_nick');
 Irssi::settings_add_int('smartfilter', 'smartfilter_garbage_multiplier', 4);
 Irssi::settings_add_int('smartfilter', 'smartfilter_delay', 1200);
 Irssi::settings_add_str('smartfilter', 'smartfilter_ignored_chans', '');
+Irssi::settings_add_bool('smartfilter', 'smartfilter_filter_nick', 1);
