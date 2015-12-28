@@ -34,13 +34,19 @@ sub checkactive {
 		return;
 	}
 
-	if (exists $lastmsg->{$nick} && $lastmsg->{$nick} <= time() - Irssi::settings_get_int('smartfilter_delay')) {
+	my $isfirst = !exists $lastmsg->{$nick};
+
+	if (!$isfirst && $lastmsg->{$nick} <= time() - Irssi::settings_get_int('smartfilter_delay')) {
 		delete $lastmsg->{$nick};
 		Irssi::signal_stop();
 	} else {
 		$lastmsg->{$nick} = time();
 		if ($altnick) {
 			$lastmsg->{$altnick} = time();
+		}
+
+		if ($isfirst) {
+			Irssi::signal_stop();
 		}
 	}
 
