@@ -74,8 +74,8 @@ sub smartfilter_chan {
 
 # QUIT received.
 sub smartfilter_quit {
-	my ($channel, $nick, $address, $reason) = @_;
-	&checkactive($nick, undef, $channel);
+	my ($server, $nick, $address, $reason) = @_;
+	&checkactive($nick, undef, undef);
 };
 
 # NICK change received.
