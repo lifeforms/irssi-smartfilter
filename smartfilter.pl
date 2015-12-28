@@ -1,4 +1,5 @@
 use strict;
+use warnings;
 use Irssi;
 use vars qw($VERSION %IRSSI);
 
@@ -28,11 +29,12 @@ sub checkactive {
 	my $ignored_chans = Irssi::settings_get_str('smartfilter_ignored_chans');
 	my @ignored_chans_array = split /\s+/, $ignored_chans;
 
-	if(defined $channel && grep(/$channel/, @ignored_chans_array)) {
+	# Skip filtering if current channel is in 'smartfilter_ignored_chans'
+	if (defined $channel && grep(/$channel/, @ignored_chans_array)) {
 		return;
 	}
 
-	if ($lastmsg->{$nick} <= time() - Irssi::settings_get_int('smartfilter_delay')) {
+	if (exists $lastmsg->{$nick} && $lastmsg->{$nick} <= time() - Irssi::settings_get_int('smartfilter_delay')) {
 		delete $lastmsg->{$nick};
 		Irssi::signal_stop();
 	} else {
@@ -51,10 +53,9 @@ sub checkactive {
 
 # Implements garbage collection.
 sub garbagecollect{
-	my ($key) = @_;
-	foreach ($lastmsg->{$key}) {
+	foreach my $key (keys %$lastmsg) {
 		if ($lastmsg->{$key} <= time() - Irssi::settings_get_int('smartfilter_delay')) {
-                        delete $lastmsg->{$key}
+			delete $lastmsg->{$key}
 		}
 	}
 }
