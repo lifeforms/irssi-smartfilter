@@ -38,6 +38,11 @@ sub checkactive {
 		Irssi::signal_stop();
 	}
 
+	if(exists $lastmsg->{$nick} && $altnick) {
+		$lastmsg->{$altnick} = $lastmsg->{$nick};
+		delete $lastmsg->{$nick};
+	}
+
 	# Run the garbage collection every interval.
 	if ($garbagetime <= time() - (Irssi::settings_get_int('smartfilter_delay') * Irssi::settings_get_int('smartfilter_garbage_multiplier') )) {
 		garbagecollect();
@@ -60,23 +65,20 @@ sub smartfilter_chan {
 	&checkactive($nick, undef, $channel);
 };
 
-# QUIT received.
-sub smartfilter_quit {
-	my ($server, $nick, $address, $reason) = @_;
+sub smartfilter_text {
+	my ($dest, $text, $stripped) = @_;
 
-	if (Irssi::settings_get_bool('smartfilter_filter_quit')) {
-		&checkactive($nick, undef, undef);
+	# Message we attempt to print is nick change or quit notice
+	if($dest->{'level'} & MSGLEVEL_NICKS) {
+		if($stripped =~ m/([^ ]+) is now known as ([^ ]+)/) {
+			&checkactive($1, $2, $dest->{'target'});
+		}
+	} elsif($dest->{'level'} & MSGLEVEL_QUITS) {
+		if($stripped =~ m/-!- ([^ ]+) .+? has quit/) {
+			&checkactive($1, undef, $dest->{'target'});
+		}
 	}
-};
-
-# NICK change received.
-sub smartfilter_nick {
-	my ($server, $newnick, $nick, $address) = @_;
-
-	if (Irssi::settings_get_bool('smartfilter_filter_nick')) {
-		&checkactive($nick, $newnick, undef);
-	}
-};
+}
 
 # Channel message received. Mark the nick as active.
 sub log {
@@ -87,14 +89,11 @@ sub log {
 Irssi::signal_add('message public', 'log');
 Irssi::signal_add('message join', 'smartfilter_chan');
 Irssi::signal_add('message part', 'smartfilter_chan');
-Irssi::signal_add('message quit', 'smartfilter_quit');
-Irssi::signal_add('message nick', 'smartfilter_nick');
+Irssi::signal_add('print text', 'smartfilter_text');
 
 Irssi::settings_add_int('smartfilter', 'smartfilter_garbage_multiplier', 4);
 Irssi::settings_add_int('smartfilter', 'smartfilter_delay', 1200);
 Irssi::settings_add_str('smartfilter', 'smartfilter_ignored_chans', '');
-Irssi::settings_add_bool('smartfilter', 'smartfilter_filter_nick', 1);
-Irssi::settings_add_bool('smartfilter', 'smartfilter_filter_quit', 1);
 
 my $ign_chans = Irssi::settings_get_str('smartfilter_ignored_chans');
 @ignored_chans = split /\s+/, $ign_chans;
