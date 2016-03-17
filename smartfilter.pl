@@ -80,6 +80,12 @@ sub smartfilter_text {
 	}
 }
 
+sub smartfilter_settings {
+	undef @ignored_chans if @ignored_chans;
+	my $ign_chans = Irssi::settings_get_str('smartfilter_ignored_chans');
+	@ignored_chans = split /\s+/, $ign_chans;
+}
+
 # Channel message received. Mark the nick as active.
 sub log {
 	my ($server, $msg, $nick, $address, $target) = @_;
@@ -90,10 +96,10 @@ Irssi::signal_add('message public', 'log');
 Irssi::signal_add('message join', 'smartfilter_chan');
 Irssi::signal_add('message part', 'smartfilter_chan');
 Irssi::signal_add('print text', 'smartfilter_text');
+Irssi::signal_add('setup changed', 'smartfilter_settings');
 
 Irssi::settings_add_int('smartfilter', 'smartfilter_garbage_multiplier', 4);
 Irssi::settings_add_int('smartfilter', 'smartfilter_delay', 1200);
 Irssi::settings_add_str('smartfilter', 'smartfilter_ignored_chans', '');
 
-my $ign_chans = Irssi::settings_get_str('smartfilter_ignored_chans');
-@ignored_chans = split /\s+/, $ign_chans;
+smartfilter_settings();
