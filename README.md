@@ -18,4 +18,4 @@ By default, a user is considered active if they have said something in the last 
 - You can specify a space-separated list of channels for which the filtering will be disabled: `/set smartfilter_ignored_chans #channel1 #channel2`
 
 ## Contributors
-[Christian Brassat](http://crshd.anapnea.net/2012/10/03/Smartfilter-for-Irssi/), [Niall Bunting](http://niallbunting.com/) and [Walter Hop](https://lifeforms.nl/)
+[Christian Brassat](http://crshd.anapnea.net/2012/10/03/Smartfilter-for-Irssi/), [Niall Bunting](http://niallbunting.com/), [Walter Hop](https://lifeforms.nl/) and [Frantisek Sumsal](https://github.com/mrc0mmand)
