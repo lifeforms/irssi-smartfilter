@@ -28,8 +28,15 @@ our @ignored_chans;
 sub checkactive {
 	my ($nick, $altnick, $channel) = @_;
 
+	# if channel is not defined do nothing, quits and parts always have
+	# a channel so I wonder if this is needed
+	if (not defined($channel)) {
+		return;
+	}
+
 	# Skip filtering if current channel is in 'smartfilter_ignored_chans'
-	if (defined $channel && grep {$_ eq $channel} @ignored_chans) {
+	# If the channel and nick values match event happened in a query so skip filtering
+	if (grep {$_ eq $channel} @ignored_chans or $channel eq $nick) {
 		return;
 	}
 
